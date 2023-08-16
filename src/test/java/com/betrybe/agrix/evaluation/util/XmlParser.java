@@ -1,11 +1,11 @@
 package com.betrybe.agrix.evaluation.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,11 +13,12 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class XmlParser {
   private DocumentBuilder builder;
@@ -29,12 +30,12 @@ public class XmlParser {
   }
 
   /**
-   * Este método realiza o parse um arquivo XML que contém a resposta 
-   * de uma execução do cálculo de Coverage do JaCoCo.
-   * 
-   * <p> A função retorna tanto a quantidade não coberta por testes do código 
+   * Este método realiza o parse um arquivo XML que contém a resposta de uma execução do cálculo de
+   * Coverage do JaCoCo.
+   *
+   * <p> A função retorna tanto a quantidade não coberta por testes do código
    * como a porcentagem. </p>
-   * 
+   *
    * @param file o arquivo de cobertura de teste.
    * @return um mapa, contendo o percentual de cobertura dos testes.
    */
@@ -71,8 +72,9 @@ public class XmlParser {
     String missedLines = counterElement.getAttribute("missed");
     String coveredLines = counterElement.getAttribute("covered");
 
-    Double percentage = (Double.parseDouble(coveredLines)
-        / (Double.parseDouble(coveredLines) + Double.parseDouble(missedLines))) * 100;
+    Double percentage =
+        (Double.parseDouble(coveredLines) / (Double.parseDouble(coveredLines) + Double.parseDouble(
+            missedLines))) * 100;
 
     counterMap.put("type", counterElement.getAttribute("type"));
     counterMap.put("missed", missedLines);

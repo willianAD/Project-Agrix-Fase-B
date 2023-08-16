@@ -1,4 +1,4 @@
-package com.betrybe.agrix.agrix.controllers.dto;
+package com.betrybe.agrix.controllers.dto;
 
 /**
  * ResponseDto.

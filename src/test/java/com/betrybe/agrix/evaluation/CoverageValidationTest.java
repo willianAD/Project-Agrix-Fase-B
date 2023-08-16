@@ -1,7 +1,5 @@
 package com.betrybe.agrix.evaluation;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.betrybe.agrix.evaluation.util.CodeCoverageRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Req 02")
 @SpringBootTest
@@ -30,16 +30,11 @@ public class CoverageValidationTest {
   }
 
   private void checkCodeCoverage(double minExpected, double actual) {
-    assertTrue(
-        actual >= minExpected,
-        String.format(
-            "Cobertura atual é de %.1f%%,"
-                + " mas deveria ser de no mínimo %.1f%%",
-            actual, minExpected)
-    );
+    assertTrue(actual >= minExpected,
+        String.format("Cobertura atual é de %.1f%%," + " mas deveria ser de no mínimo %.1f%%",
+            actual, minExpected));
 
     log.info(
-            String.format("Cobertura de código em %.1f%% (mínimo de %.1f%%)", actual, minExpected)
-    );
+        String.format("Cobertura de código em %.1f%% (mínimo de %.1f%%)", actual, minExpected));
   }
 }

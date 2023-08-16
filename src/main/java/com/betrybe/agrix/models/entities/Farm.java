@@ -1,4 +1,4 @@
-package com.betrybe.agrix.agrix.models.entities;
+package com.betrybe.agrix.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 import java.util.List;
 
 /**
@@ -26,9 +25,6 @@ public class Farm {
   @JsonIgnore
   @OneToMany(mappedBy = "farm")
   private List<Crop> crops;
-
-  public Farm() {
-  }
 
   /**
    * Metodo contrutor.

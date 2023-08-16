@@ -1,11 +1,9 @@
-package com.betrybe.agrix.agrix.service;
+package com.betrybe.agrix.service;
 
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.repositories.FarmRepository;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FarmService {
-  private FarmRepository farmRepository;
+  private final FarmRepository farmRepository;
 
   @Autowired
   public FarmService(FarmRepository farmRepository) {

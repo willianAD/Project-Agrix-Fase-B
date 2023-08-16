@@ -1,15 +1,13 @@
-package com.betrybe.agrix.agrix.controllers;
+package com.betrybe.agrix.controllers;
 
 import com.betrybe.agrix.controllers.dto.CropDto;
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.service.CropService;
 import com.betrybe.agrix.service.FarmService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class CropController {
 
-  private CropService cropService;
-  private FarmService farmService;
+  private final CropService cropService;
+  private final FarmService farmService;
 
   @Autowired
   public CropController(CropService cropService, FarmService farmService) {
@@ -91,7 +89,7 @@ public class CropController {
     }
     return optionalFarm.map(farm -> {
       List<CropDto.ToResponse> cropResponse =
-          cropService.getCropById(farmId).stream().map(CropDto::froEntity)
+          cropService.getCropById(farmId).stream().map(CropDto::fromEntity)
               .collect(Collectors.toList());
       return ResponseEntity.ok(cropResponse);
     }).orElse(ResponseEntity.notFound().build());

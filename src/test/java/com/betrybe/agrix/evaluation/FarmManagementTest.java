@@ -1,17 +1,9 @@
 package com.betrybe.agrix.evaluation;
 
-import static com.betrybe.agrix.evaluation.util.TestHelpers.objectToJson;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.betrybe.agrix.evaluation.mock.FarmFixtures;
 import com.betrybe.agrix.evaluation.mock.MockFarm;
 import com.betrybe.agrix.evaluation.util.SimpleResultHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +18,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.nio.charset.StandardCharsets;
+
+import static com.betrybe.agrix.evaluation.util.TestHelpers.objectToJson;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,11 +45,9 @@ class FarmManagementTest {
   public void setup(WebApplicationContext wac) {
     // We need this to make sure the response body is in UTF-8,
     // since we're testing raw strings
-    this.mockMvc = MockMvcBuilders
-        .webAppContextSetup(wac)
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(wac)
         .defaultResponseCharacterEncoding(StandardCharsets.UTF_8)
-        .alwaysDo(new SimpleResultHandler())
-        .build();
+        .alwaysDo(new SimpleResultHandler()).build();
   }
 
   @Test
@@ -63,19 +62,15 @@ class FarmManagementTest {
     // Add id so that comparison makes sense
     farm.put("id", result.get("id"));
 
-    assertEquals(
-        farm,
-        result
-    );
+    assertEquals(farm, result);
   }
 
   private MockFarm performFarmCreation(MockFarm farm) throws Exception {
-    String responseContent = mockMvc.perform(post("/farms")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectToJson(farm)))
+    String responseContent = mockMvc.perform(
+            post("/farms").contentType(MediaType.APPLICATION_JSON).content(objectToJson(farm)))
         .andExpect(status().isCreated())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andReturn().getResponse().getContentAsString();
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse()
+        .getContentAsString();
 
     return jsonMapper.readValue(responseContent, MockFarm.class);
   }

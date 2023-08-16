@@ -1,6 +1,5 @@
 package com.betrybe.agrix.ebytr.staff.entity;
 
-
 import com.betrybe.agrix.ebytr.staff.security.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,8 +70,8 @@ public class Person {
     }
     Person person = (Person) o;
     return Objects.equals(id, person.id) && Objects.equals(username,
-        person.username) && Objects.equals(password, person.password)
-        && Objects.equals(role, person.role);
+        person.username) && Objects.equals(password, person.password) && Objects.equals(role,
+        person.role);
   }
 }
 

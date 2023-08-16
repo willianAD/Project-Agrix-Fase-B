@@ -1,4 +1,4 @@
-package com.betrybe.agrix.agrix.controllers.dto;
+package com.betrybe.agrix.controllers.dto;
 
 import com.betrybe.agrix.models.entities.Crop;
 
@@ -17,7 +17,7 @@ public record CropDto(Long id, String name, double plantedArea) {
   }
 
   /**
-   * FromEntiti.
+   * FromEntity.
    */
   public static record ToResponse(Long id, String name, double plantedArea, Long farmId) {
 

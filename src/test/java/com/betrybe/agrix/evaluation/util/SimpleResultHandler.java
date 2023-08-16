@@ -1,10 +1,11 @@
 package com.betrybe.agrix.evaluation.util;
 
-import java.nio.charset.StandardCharsets;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
+
+import java.nio.charset.StandardCharsets;
 
 public class SimpleResultHandler implements ResultHandler {
   @Override

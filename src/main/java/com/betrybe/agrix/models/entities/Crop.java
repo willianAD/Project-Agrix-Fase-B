@@ -1,4 +1,4 @@
-package com.betrybe.agrix.agrix.models.entities;
+package com.betrybe.agrix.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,9 +28,6 @@ public class Crop {
   @JoinColumn(name = "farm_id")
   private Farm farm;
 
-  public Crop() {
-  }
-
   /**
    * Metodo contrutor.
    */
@@ -40,6 +37,8 @@ public class Crop {
     this.plantedArea = plantedArea;
     this.farm = farm;
   }
+
+  public Crop() {}
 
   public Long getId() {
     return id;

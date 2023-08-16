@@ -1,11 +1,9 @@
-package com.betrybe.agrix.agrix.service;
+package com.betrybe.agrix.service;
 
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.repositories.CropRepository;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CropService {
 
-  private CropRepository cropRepository;
+  private final CropRepository cropRepository;
 
   @Autowired
   public CropService(CropRepository cropRepository) {
