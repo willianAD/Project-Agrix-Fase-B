@@ -5,6 +5,7 @@ import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.service.CropService;
 import com.betrybe.agrix.service.FarmService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -71,6 +73,8 @@ public class CropController {
     return optionalFarm.map(farm -> {
       Crop crop = cropDto.toCrop();
       crop.setFarm(farm);
+      crop.setPlantedDate(cropDto.getPlantedDate());
+      crop.setHarvestDate(cropDto.getHarvestDate());
       Crop savedCrop = cropService.insertCrop(crop);
       CropDto.ToResponse response = CropDto.fromEntity(savedCrop);
       return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -89,5 +93,20 @@ public class CropController {
     List<Crop> crops = optionalFarm.get().getCrops();
     List<CropDto.ToResponse> cropResponse = crops.stream().map(CropDto::fromEntity).toList();
     return ResponseEntity.ok(cropResponse);
+  }
+
+  /**
+   * Método searchCropsByHarvestDate.
+   */
+  @GetMapping("/crops/search")
+  public ResponseEntity<?> searchCropsByHarvestDate(@RequestParam String start,
+      @RequestParam String end) {
+    LocalDate startDate = LocalDate.parse(start);
+    LocalDate endDate = LocalDate.parse(end);
+
+    List<Crop> cropsInRange = cropService.getCropsByHarvestDateRange(startDate, endDate);
+
+    List<CropDto.ToResponse> cropDto = cropsInRange.stream().map(CropDto::fromEntity).toList();
+    return ResponseEntity.ok(cropDto);
   }
 }
