@@ -3,9 +3,11 @@ package com.betrybe.agrix.controllers;
 import com.betrybe.agrix.controllers.dto.FertilizerDto;
 import com.betrybe.agrix.models.entities.Fertilizer;
 import com.betrybe.agrix.service.FertilizerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,15 @@ public class FertilizerController {
     Fertilizer savedFertilizer = fertilizerService.insertFertilizer(fertilizer);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedFertilizer);
+  }
+
+  /**
+   * Método getAllFertilizers.
+   */
+  @GetMapping()
+  public ResponseEntity<List<Fertilizer>> getAllFertilizers() {
+    List<Fertilizer> allFertilizers = fertilizerService.getAllFertilizers();
+
+    return ResponseEntity.ok(allFertilizers);
   }
 }
