@@ -7,7 +7,6 @@ import com.betrybe.agrix.service.CropService;
 import com.betrybe.agrix.service.FarmService;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,11 +86,8 @@ public class CropController {
     if (optionalFarm.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fazenda não encontrada!");
     }
-    return optionalFarm.map(farm -> {
-      List<CropDto.ToResponse> cropResponse =
-          cropService.getCropById(farmId).stream().map(CropDto::fromEntity)
-              .collect(Collectors.toList());
-      return ResponseEntity.ok(cropResponse);
-    }).orElse(ResponseEntity.notFound().build());
+    List<Crop> crops = optionalFarm.get().getCrops();
+    List<CropDto.ToResponse> cropResponse = crops.stream().map(CropDto::fromEntity).toList();
+    return ResponseEntity.ok(cropResponse);
   }
 }
