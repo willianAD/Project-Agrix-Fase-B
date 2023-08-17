@@ -35,6 +35,8 @@ public class Farm {
     this.size = size;
   }
 
+  public Farm() {}
+
   public Farm(String name, double size) {
     this.setName(name);
     this.setSize(size);
