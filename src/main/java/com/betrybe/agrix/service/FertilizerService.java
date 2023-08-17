@@ -30,8 +30,8 @@ public class FertilizerService {
     return fertilizerRepository.findAll();
   }
 
-  //Método getFarmById.
-  public Optional<Fertilizer> getCropById(Long fertilizerId) {
+  //Método getFertilizerById.
+  public Optional<Fertilizer> getFertilizerById(Long fertilizerId) {
     return fertilizerRepository.findById(fertilizerId);
   }
 }
