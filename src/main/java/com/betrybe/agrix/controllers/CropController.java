@@ -138,6 +138,10 @@ public class CropController {
     Crop crop = optionalCrop.get();
     Fertilizer fertilizer = optionalFertilizer.get();
 
+    if (crop.getFertilizers().contains(fertilizer)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fertilizante não encontrado!");
+    }
+
     crop.addFertilizer(fertilizer);
     cropService.insertCrop(crop);
 
@@ -163,5 +167,4 @@ public class CropController {
 
     return ResponseEntity.ok(fertilizerDtos);
   }
-
 }
