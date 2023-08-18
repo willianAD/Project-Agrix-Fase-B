@@ -3,8 +3,10 @@ package com.betrybe.agrix.controllers;
 import com.betrybe.agrix.controllers.dto.CropDto;
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
+import com.betrybe.agrix.models.entities.Fertilizer;
 import com.betrybe.agrix.service.CropService;
 import com.betrybe.agrix.service.FarmService;
+import com.betrybe.agrix.service.FertilizerService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +30,17 @@ public class CropController {
 
   private final CropService cropService;
   private final FarmService farmService;
+  private final FertilizerService fertilizerService;
 
+  /**
+ * Autowired.
+ */
   @Autowired
-  public CropController(CropService cropService, FarmService farmService) {
+  public CropController(CropService cropService, FarmService farmService,
+      FertilizerService fertilizerService) {
     this.cropService = cropService;
     this.farmService = farmService;
+    this.fertilizerService = fertilizerService;
   }
 
   /**
@@ -109,4 +117,31 @@ public class CropController {
     List<CropDto.ToResponse> cropDto = cropsInRange.stream().map(CropDto::fromEntity).toList();
     return ResponseEntity.ok(cropDto);
   }
+
+  /**
+   * Método associateCropWithFertilizer.
+   */
+  @PostMapping("/crops/{cropId}/fertilizers/{fertilizerId}")
+  public ResponseEntity<String> associateCropWithFertilizer(@PathVariable Long cropId,
+      @PathVariable Long fertilizerId) {
+    Optional<Crop> optionalCrop = cropService.getCropById(cropId);
+    if (optionalCrop.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plantação não encontrada!");
+    }
+
+    Optional<Fertilizer> optionalFertilizer = fertilizerService.getFertilizerById(fertilizerId);
+    if (optionalFertilizer.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fertilizante não encontrado!");
+    }
+
+    Crop crop = optionalCrop.get();
+    Fertilizer fertilizer = optionalFertilizer.get();
+
+    crop.addFertilizer(fertilizer);
+    cropService.insertCrop(crop);
+
+    return ResponseEntity.status(HttpStatus.CREATED)
+      .body("Fertilizante e plantação associados com sucesso!");
+  }
+
 }
