@@ -10,4 +10,23 @@ public record FertilizerDto(String name, String brand, String composition) {
   public Fertilizer toFertilizer() {
     return new Fertilizer(name, brand, composition);
   }
+
+  /**
+   * ToResponse.
+   */
+  public record ToResponse(Long id, String name, String brand, String composition) {
+
+  }
+
+  /**
+   * FromEntity.
+   */
+  public static ToResponse fromEntity(Fertilizer fertilizer) {
+    return new ToResponse(
+      fertilizer.getId(),
+      fertilizer.getName(),
+      fertilizer.getBrand(),
+      fertilizer.getComposition()
+   );
+  }
 }

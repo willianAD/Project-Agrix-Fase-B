@@ -1,6 +1,7 @@
 package com.betrybe.agrix.controllers;
 
 import com.betrybe.agrix.controllers.dto.CropDto;
+import com.betrybe.agrix.controllers.dto.FertilizerDto;
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.entities.Fertilizer;
@@ -142,6 +143,25 @@ public class CropController {
 
     return ResponseEntity.status(HttpStatus.CREATED)
       .body("Fertilizante e plantação associados com sucesso!");
+  }
+
+  /**
+   * Método getFertilizersByCropId.
+   */
+  @GetMapping("/crops/{cropId}/fertilizers")
+  public ResponseEntity<?> getFertilizersByCropId(@PathVariable Long cropId) {
+    Optional<Crop> optionalCrop = cropService.getCropById(cropId);
+    if (optionalCrop.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plantação não encontrada!");
+    }
+
+    Crop crop = optionalCrop.get();
+    List<Fertilizer> fertilizers = crop.getFertilizers();
+
+    List<FertilizerDto.ToResponse> fertilizerDtos = fertilizers.stream()
+        .map(FertilizerDto::fromEntity).toList();
+
+    return ResponseEntity.ok(fertilizerDtos);
   }
 
 }

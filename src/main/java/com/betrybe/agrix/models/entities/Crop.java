@@ -68,6 +68,10 @@ public class Crop {
     fertilizers.add(fertilizer);
   }
 
+  public List<Fertilizer> getFertilizers() {
+    return fertilizers;
+  }
+
   public void setId(Long id) {
     this.id = id;
   }
